@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Execução - Obra Daniel Nunes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Cores da Marca Construalta */
+  --brand-blue: #081A4A;
+  --brand-orange: #F26522;
+  
+  /* Paleta Base */
+  --color-background-page: #f1f5f9;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f8fafc;
+  --color-border-tertiary: #e2e8f0;
+  
+  /* Textos */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94a3b8;
+  
+  /* Alertas */
+  --color-background-warning: #fff7ed;
+  --color-text-warning: #c2410c;
+  
+  /* Estrutura */
+  --font-sans: 'Inter', sans-serif;
+  --border-radius-xl: 16px;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { 
+  font-family: var(--font-sans); 
+  background-color: var(--color-background-page);
+  color: var(--color-text-primary);
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  line-height: 1.5;
+}
+
+.document-container {
+  max-width: 850px;
+  width: 100%;
+  background: var(--color-background-primary);
+  padding: 2.5rem;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Header & Logo */
+.doc-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border-tertiary);
+}
+
+.brand-logo {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+}
+
+.header-text h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand-blue);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.header-text p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* Typography & Titles */
+.section-header { 
+  font-size: 0.75rem; 
+  font-weight: 600; 
+  color: var(--color-text-tertiary); 
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
+  padding: 1.5rem 0 0.75rem; 
+  border-top: 1px solid var(--color-border-tertiary); 
+  margin-top: 1.5rem; 
+}
+.section-header:first-of-type { border-top: none; margin-top: 0; padding-top: 0.5rem; }
+
+/* Summary Grid */
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 2rem; }
+.summary-card { 
+  background: var(--color-background-primary); 
+  border: 1px solid var(--color-border-tertiary); 
+  border-radius: var(--border-radius-lg); 
+  padding: 16px; 
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+.summary-card:hover {
+  border-color: var(--brand-orange);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.summary-val { font-size: 24px; font-weight: 700; color: var(--brand-blue); }
+.summary-lbl { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-top: 4px; }
+
+/* Gantt Chart */
+.gantt-wrap { margin-bottom: 2.5rem; }
+.gantt-title { font-size: 14px; font-weight: 600; color: var(--brand-blue); margin-bottom: 12px; }
+.gantt-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.gantt-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); width: 180px; flex-shrink: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gantt-track { flex: 1; background: var(--color-background-secondary); border-radius: 6px; height: 20px; position: relative; border: 1px solid var(--color-border-tertiary); }
+.gantt-bar { position: absolute; top: 0; height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 8px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.2); }
+.gantt-bar-label { font-size: 10px; font-weight: 600; white-space: nowrap; text-shadow: 0 1px 1px rgba(0,0,0,0.2); }
+.gantt-months { display: flex; margin-left: 192px; margin-bottom: 6px; }
+.gantt-month { flex: 1; font-size: 10px; font-weight: 600; color: var(--color-text-tertiary); text-align: center; text-transform: uppercase; }
+
+/* Phases List */
+.phase-card { background: var(--color-background-primary); border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow-sm); transition: border-color 0.2s ease; }
+.phase-card:hover { border-color: #cbd5e1; }
+.phase-header { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 16px; padding: 14px 16px; cursor: pointer; user-select: none; transition: background 0.2s ease; }
+.phase-header:hover { background: var(--color-background-secondary); }
+.phase-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+.phase-title-block { min-width: 0; }
+.phase-title { font-size: 14px; font-weight: 600; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phase-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; }
+.phase-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.duration-badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.cap-tag { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); }
+.phase-body { padding: 0 16px 16px; border-top: 1px solid var(--color-border-tertiary); display: none; background: #fafaf9; }
+.phase-body.open { display: block; animation: slideDown 0.3s ease; }
+.task-list { margin-top: 12px; }
+.task-row { display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; padding: 8px 0; border-bottom: 1px dashed var(--color-border-tertiary); }
+.task-row:last-child { border-bottom: none; }
+.task-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+.task-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.task-note { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+
+/* Warnings */
+.warn-note { background: var(--color-background-warning); color: var(--color-text-warning); border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 12px; font-weight: 500; margin-top: 16px; border-left: 4px solid var(--brand-orange); }
+.crit-bar { height: 4px; width: 100%; }
+.chevron { font-size: 10px; color: var(--color-text-tertiary); transition: transform 0.3s ease; margin-left: 8px;}
+.chevron.open { transform: rotate(180deg); }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="document-container">
+  
+  <header class="doc-header">
+    <img src="LOGO-WPP.jpg" alt="Construalta Logo" class="brand-logo">
+    <div class="header-text">
+      <h1>Plano de Execução e Faseamento</h1>
+      <p>Obra Daniel Nunes, Póvoa de Sobrinhos</p>
+    </div>
+  </header>
+
+  <div class="summary-grid">
+    <div class="summary-card"><div class="summary-val">8</div><div class="summary-lbl">Meses de Obra</div></div>
+    <div class="summary-card"><div class="summary-val">3+</div><div class="summary-lbl">Operários Fixos</div></div>
+    <div class="summary-card"><div class="summary-val">79 271 €</div><div class="summary-lbl">Total s/ IVA</div></div>
+  </div>
+
+  <div class="gantt-wrap">
+    <div class="gantt-title">Cronograma Geral — 8 Meses</div>
+    <div class="gantt-months" id="months-row"></div>
+    <div id="gantt-rows"></div>
+  </div>
+
+  <p class="section-header">Faseamento Detalhado</p>
+  <div id="phases-container"></div>
+
+  <div class="warn-note" style="margin-top: 2rem; margin-bottom: 2rem; border-left-color: var(--brand-blue);">
+    ⚠ <strong>Validade desta proposta: 8 dias.</strong> Proceder à adjudicação com urgência para garantir os preços unitários apresentados.
+  </div>
+
+  <p class="section-header">Notas Logísticas de Antecipação</p>
+  <div id="logistics-container"></div>
+
+</div>
+
+<script>
+const phases = [
+  {
+    id: 1, title: "Instalação de estaleiro", sub: "Mobilização e preparação",
+    start: 0, dur: 2, color: "#64748B", bg: "#F1F5F9", textColor: "#334155", cap: "01.00",
+    tasks: [
+      { name: "Vedação e sinalização do estaleiro", note: "3 homens", dot: "#64748B" },
+      { name: "Instalação de contentores/escritório de obra", note: "3 homens", dot: "#64748B" },
+      { name: "Planeamento de acessos e descarga de materiais", note: "Chefe de obra", dot: "#64748B" },
+      { name: "Encomenda antecipada: câmaras de visita, tubagens, brita, cimento", note: "Adjudicar subempreiteiros especialidades", dot: "#F26522" },
+    ], warn: null
+  },
+  {
+    id: 2, title: "Movimentos de terras", sub: "Escavações, aterros e valas",
+    start: 2, dur: 10, color: "#F26522", bg: "#FFF7ED", textColor: "#9A3412", cap: "02.0",
+    tasks: [
+      { name: "Escavação plataforma piscina + sapatas pérgula (02.1 — 15 m³)", note: "Máquina + 2 homens apoio", dot: "#F26522" },
+      { name: "Escavação fundações muro vedação (02.2 — 6,4 m³)", note: "Máquina + 2 homens apoio", dot: "#F26522" },
+      { name: "Abertura de vala perimetral 45m (02.7 — 93,6 m³) ⚡ crítico", note: "Máquina + 3 homens compactação; tubo fornecido pelo D.O.", dot: "#081A4A" },
+      { name: "Fornecimento brita + geotextil fundações piscina (03.1)", note: "1 homem; aguardar compactação", dot: "#F26522" },
+      { name: "Barramento betuminoso + tela pitonada XPS (02.5 + 02.6)", note: "2 homens; aplicar após betonagem sapatas", dot: "#F26522" },
+    ],
+    warn: "Caminho crítico: a vala perimetral de 45m condiciona a execução das redes de infraestruturas. Deve ser concluída e compactada antes de iniciar o Cap. 010/011/013."
+  },
+  {
+    id: 3, title: "Betão armado", sub: "Sapatas, piscina, muros e pérgula",
+    start: 8, dur: 18, color: "#081A4A", bg: "#EFF6FF", textColor: "#1E3A8A", cap: "03.0",
+    tasks: [
+      { name: "Cofragem + armadura sapatas isoladas (03.2.1.1 — 2,25 m³)", note: "3 homens; ferro 16/12, afastamentos 15cm", dot: "#081A4A" },
+      { name: "Betonagem sapatas B35 + aditivo Hidrofogo — CURA 14 DIAS", note: "Betão pronto — 3 homens descarga e vibração", dot: "#F26522" },
+      { name: "Pavimento fundo piscina em BA + XPS 10cm (03b.2.1.1 — 7,08 m³)", note: "Ancoragem a paredes existentes; acabamento talochado", dot: "#081A4A" },
+      { name: "Paredes piscina em BA 20cm + caleira (03b.2.1.2 — 4,08 m³)", note: "Ferro 10V + 6H; selagem varões interligação", dot: "#081A4A" },
+      { name: "Laje cobertura piscina 4,4x0,75m (03.2.2 — 0,77 m³)", note: "Parede enrolador + grelha ventilação; tubagem embebida", dot: "#081A4A" },
+      { name: "Muros vedação BA á vista 20cm (025.4 — 13,52 m³)", note: "Bisel topo; caixa correio inox; Nº porta esculpido", dot: "#081A4A" },
+      { name: "Viga fundação muro frente via pública (025.5 — 5,13 m³)", note: "Alinhar face exterior com limite do muro", dot: "#081A4A" },
+    ],
+    warn: "Atenção: cada betonagem exige mínimo 7 dias antes de descofragem e 28 dias para carga total. Planear sequência para aproveitar a equipa noutras frentes durante as curas."
+  },
+  {
+    id: 4, title: "Infraestruturas exteriores", sub: "Água, esgotos e águas pluviais",
+    start: 12, dur: 12, color: "#0D9488", bg: "#F0FDFA", textColor: "#115E59", cap: "010 + 011 + 013",
+    tasks: [
+      { name: "Rede água fria PEAD PN10 Ø40mm — 7,5ml (010.1.2)", note: "Subempreiteiro hidráulico + 1 homem vala", dot: "#0D9488" },
+      { name: "Rede esgotos Ø125mm — 43,8ml + Ø140mm — 2ml (011.2.5/6)", note: "Ligação à rede pública existente", dot: "#0D9488" },
+      { name: "5 câmaras visita betão pré-moldado (011.3)", note: "2 homens; aro e tampa ferro fundido", dot: "#0D9488" },
+      { name: "Grelha drenagem PP 10x10cm — 39,5ml + Ø50mm + Ø125mm (013.1)", note: "Subempreiteiro pluviais + 1 homem", dot: "#0D9488" },
+      { name: "3 caixas visita alvenaria tijolo (013.2)", note: "2 homens", dot: "#0D9488" },
+      { name: "Caleira drenagem garagem 4,6ml — grelha já em obra (013.3)", note: "1 homem; ligar à rede pluvial existente", dot: "#0D9488" },
+    ], warn: null
+  },
+  {
+    id: 5, title: "Arranjos exteriores", sub: "Pavimentação, vedações e poço",
+    start: 20, dur: 8, color: "#D97706", bg: "#FFFBEB", textColor: "#92400E", cap: "025.0",
+    tasks: [
+      { name: "Cubinho granito cinza 5cm — 75 m² acesso automóvel (025.1)", note: "2 homens; juntas com aguadilha de cimento", dot: "#D97706" },
+      { name: "Betuminoso área ceder ao município — 94 m² (025.6)", note: "Subempreiteiro betuminosos; remoção muro bloco existente", dot: "#D97706" },
+      { name: "Tampa reforçada Ø2,0m poço + caixa 40x40 com cubinho (025.7)", note: "2 homens; revestir tampa com cubinho 025.1", dot: "#D97706" },
+    ],
+    warn: "Betuminoso só pode ser executado depois de concluídas TODAS as redes exteriores. Coordenar com câmara municipal a cedência de terreno antes do início."
+  },
+  {
+    id: 6, title: "Pinturas cave e garagem", sub: "Epóxi pavimentos — Sika / Sikafloor",
+    start: 14, dur: 6, color: "#0284C7", bg: "#F0F9FF", textColor: "#075985", cap: "03a.2.1",
+    tasks: [
+      { name: "Epóxi aquoso cave 200 m² — Seirepox 10W (03a.2.1.1)", note: "2 homens; 2 demãos cruzadas; preparação de superfície", dot: "#0284C7" },
+      { name: "Epóxi garagem Rch 28 m² — Sikafloor 264 RAL 7004 (03a.2.1.2)", note: "1 homem; incluir rodapé 12cm", dot: "#0284C7" },
+    ],
+    warn: "Executar estas pinturas ANTES da instalação dos pladures interiores para evitar respingos. A cave deve estar limpa e seca (mínimo 3% humidade superficial)."
+  },
+  {
+    id: 7, title: "Pladur — Paredes e isolamento", sub: "Divisórias, isolamento térmico/acústico",
+    start: 18, dur: 12, color: "#65A30D", bg: "#F7FEE7", textColor: "#3F6212", cap: "05.0 + 06.0",
+    tasks: [
+      { name: "Estruturas metálicas de suporte — 2 m² (05.3.1)", note: "1 homem specialist pladur", dot: "#65A30D" },
+      { name: "Placa Knauf Acustik 12,5 sobre existente — 72,8 m² (05.3.2)", note: "2 homens; juntas intercaladas", dot: "#65A30D" },
+      { name: "Dupla placa Standard+Acustik 12,5 — 104 m² (05.3.2a)", note: "2 homens; SONOROCK 6cm entre montantes", dot: "#65A30D" },
+      { name: "Placa Hidrofuga H1 WC — 44,2 m² + dupla 24,4 m² (05.3.3/a)", note: "2 homens; zonas húmidas", dot: "#65A30D" },
+      { name: "Isolamento WOOLPLAC LR 40mm parede garagem — 46,2 m² (06.5)", note: "1 homem; adesivo sobre betão/alvenaria", dot: "#65A30D" },
+      { name: "Isolamento WOOLPLAC LR 40mm teto garagem — 41 m² + alçapão (06.9)", note: "2 homens; fixações mecânicas", dot: "#65A30D" },
+    ], warn: null
+  },
+  {
+    id: 8, title: "Revestimento de tetos falsos", sub: "Pladur tetos — compartimentos secos e húmidos",
+    start: 24, dur: 8, color: "#4F46E5", bg: "#EEF2FF", textColor: "#3730A3", cap: "021.0",
+    tasks: [
+      { name: "Teto falso Standard 12,5mm compartimentos secos — 201,8 m² (021.1)", note: "3 homens; sancas, perfil sombra, pontos luz", dot: "#4F46E5" },
+      { name: "Teto falso Hidrófugo 12,5mm WC/cozinha/lavandaria — 87 m² (021.2)", note: "2 homens; sancas embutidas", dot: "#4F46E5" },
+      { name: "Isolamento SONOROCK 6cm sobre teto 1º andar — 166 m² (05.3.4)", note: "2 homens; corte e ajuste montantes", dot: "#4F46E5" },
+    ], warn: null
+  },
+  {
+    id: 9, title: "Pinturas interiores", sub: "Paredes e tetos — acabamento final",
+    start: 26, dur: 6, color: "#BE185D", bg: "#FDF2F8", textColor: "#831843", cap: "022.0",
+    tasks: [
+      { name: "Pintura paredes Piso 0 brilhante — 139 m² (022.1a)", note: "2 homens; anti-fungos biocida; Q3", dot: "#BE185D" },
+      { name: "Pintura paredes Piso 1 mate — 187 m² (022.1b)", note: "2 homens", dot: "#BE185D" },
+      { name: "Pintura tetos Piso 0 brilhante — 162 m² (022.2/022.1a)", note: "2 homens; andaimes", dot: "#BE185D" },
+      { name: "Pintura tetos Piso 1 mate — 167 m² (022.2/022.1b)", note: "2 homens; andaimes", dot: "#BE185D" },
+    ],
+    warn: "Pinturas finais são a última operação interior. Pladur deve estar completamente tratado (barramento + primário + lixagem) antes de começar. Cores e materiais a validar com fiscalização."
+  },
+];
+
+// Array de logística de volta
+const logistics = [
+  { week: "Semana 1 (adjudicação)", items: ["Adjudicar subempreiteiros: hidráulica, pluviais, betuminosos", "Encomendar câmaras de visita pré-moldadas (lead time ~2 sem)", "Encomendar tubagens PEAD, PVC, grelhas PP"] },
+  { week: "Semana 2", items: ["Encomendar betão pronto B35 (coordenar com betonagem sapatas)", "Encomendar brita 15cm + geotextil 200g/m²", "Adjudicar especialista KNAUF/pladur"] },
+  { week: "Mês 2 (antes betão armado)", items: ["Encomendar armaduras A500NR (ferro 16, 12, 10, 6)", "Encomendar XPS FIBRANxps-500L 10cm (piscina) e 40mm WOOLPLAC LR (garagem)", "Encomendar SONOROCK ECO 6cm — quantidade total"] },
+  { week: "Mês 3-4 (antes arranjos exteriores)", items: ["Encomendar cubinho granito cinza 5cm — 75 m² (lead time 2-3 sem)", "Encomendar tampa poço Ø2,0m reforçada", "Contactar câmara municipal para processo de cedência de terreno e betuminoso"] },
+  { week: "Mês 4-5 (antes pladur)", items: ["Encomendar sistema KNAUF completo: Acustik, Standard A, Hidrofuga H1, WOOLPLAC", "Encomendar tintas: Seirepox 10W, Sikafloor 264, tinta paredes anti-fungos"] },
+  { week: "Mês 6-7 (antes acabamentos finais)", items: ["Confirmar cor RAL tinta paredes com dono de obra / fiscalização", "Garantir que rebocos/estuques estão curados (mín. 28 dias) antes das pinturas finais"] },
+];
+
+const months = ["M1","M2","M3","M4","M5","M6","M7","M8"];
+const totalWeeks = 32;
+
+const monthsRow = document.getElementById('months-row');
+months.forEach(m => {
+  const d = document.createElement('div');
+  d.className = 'gantt-month';
+  d.textContent = m;
+  monthsRow.appendChild(d);
+});
+
+const ganttRows = document.getElementById('gantt-rows');
+phases.forEach(p => {
+  const row = document.createElement('div');
+  row.className = 'gantt-row';
+  const lbl = document.createElement('div');
+  lbl.className = 'gantt-label';
+  lbl.textContent = 'F' + p.id + '. ' + p.title;
+  const track = document.createElement('div');
+  track.className = 'gantt-track';
+  const bar = document.createElement('div');
+  bar.className = 'gantt-bar';
+  bar.style.left = (p.start / totalWeeks * 100) + '%';
+  bar.style.width = (p.dur / totalWeeks * 100) + '%';
+  bar.style.background = p.color;
+  
+  const bl = document.createElement('span');
+  bl.className = 'gantt-bar-label';
+  bl.style.color = '#fff';
+  bl.textContent = p.dur + 'sem';
+  bar.appendChild(bl);
+  track.appendChild(bar);
+  row.appendChild(lbl);
+  row.appendChild(track);
+  ganttRows.appendChild(row);
+});
+
+const container = document.getElementById('phases-container');
+phases.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'phase-card';
+
+  const bar = document.createElement('div');
+  bar.className = 'crit-bar';
+  bar.style.background = p.color;
+  card.appendChild(bar);
+
+  const hdr = document.createElement('div');
+  hdr.className = 'phase-header';
+
+  const num = document.createElement('div');
+  num.className = 'phase-num';
+  num.style.background = p.bg;
+  num.style.color = p.color;
+  num.textContent = 'F' + p.id;
+
+  const tb = document.createElement('div');
+  tb.className = 'phase-title-block';
+  const tt = document.createElement('div');
+  tt.className = 'phase-title';
+  tt.textContent = p.title;
+  const ts = document.createElement('div');
+  ts.className = 'phase-sub';
+  ts.textContent = p.sub;
+  tb.appendChild(tt);
+  tb.appendChild(ts);
+
+  const meta = document.createElement('div');
+  meta.className = 'phase-meta';
+  const dur = document.createElement('div');
+  dur.className = 'duration-badge';
+  dur.style.background = p.bg;
+  dur.style.color = p.color;
+  dur.textContent = p.dur + ' semanas';
+  const cap = document.createElement('div');
+  cap.className = 'cap-tag';
+  cap.textContent = 'Cap. ' + p.cap;
+  meta.appendChild(dur);
+  meta.appendChild(cap);
+
+  const rightSide = document.createElement('div');
+  rightSide.style.display = 'flex';
+  rightSide.style.alignItems = 'center';
+  
+  const chev = document.createElement('span');
+  chev.className = 'chevron';
+  chev.innerHTML = '▼';
+
+  rightSide.appendChild(meta);
+  rightSide.appendChild(chev);
+
+  hdr.appendChild(num);
+  hdr.appendChild(tb);
+  hdr.appendChild(rightSide);
+
+  const body = document.createElement('div');
+  body.className = 'phase-body';
+
+  const taskList = document.createElement('div');
+  taskList.className = 'task-list';
+  p.tasks.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const dot = document.createElement('div');
+    dot.className = 'task-dot';
+    dot.style.background = t.dot;
+    const info = document.createElement('div');
+    const name = document.createElement('div');
+    name.className = 'task-name';
+    name.textContent = t.name;
+    const note = document.createElement('div');
+    note.className = 'task-note';
+    note.textContent = t.note;
+    info.appendChild(name);
+    info.appendChild(note);
+    row.appendChild(dot);
+    row.appendChild(info);
+    taskList.appendChild(row);
+  });
+  body.appendChild(taskList);
+
+  if (p.warn) {
+    const w = document.createElement('div');
+    w.className = 'warn-note';
+    w.innerHTML = '<strong>⚠ Atenção:</strong> ' + p.warn;
+    body.appendChild(w);
+  }
+
+  hdr.addEventListener('click', () => {
+    body.classList.toggle('open');
+    chev.classList.toggle('open');
+  });
+
+  card.appendChild(hdr);
+  card.appendChild(body);
+  container.appendChild(card);
+});
+
+// Renderização Logística de volta e com estilo novo
+const logCont = document.getElementById('logistics-container');
+logistics.forEach(l => {
+  const card = document.createElement('div');
+  card.className = 'phase-card';
+  card.style.marginBottom = '10px';
+  
+  const hdr = document.createElement('div');
+  hdr.className = 'phase-header';
+  hdr.style.gridTemplateColumns = '1fr';
+  hdr.style.cursor = 'default';
+  hdr.textContent = l.week;
+  
+  const body = document.createElement('div');
+  body.style.padding = '8px 16px 16px';
+  
+  l.items.forEach(item => {
+    const row = document.createElement('div');
+    row.style.cssText = 'font-size: 13px; font-weight: 500; color: var(--color-text-secondary); padding: 5px 0; display: flex; gap: 10px; align-items: start;';
+    row.innerHTML = '<span style="color:var(--brand-orange); flex-shrink:0">→</span><span>' + item + '</span>';
+    body.appendChild(row);
+  });
+  
+  card.appendChild(hdr);
+  card.appendChild(body);
+  logCont.appendChild(card);
+});
+</script>
+</body>
+</html>
